@@ -2,3 +2,10 @@ apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "ru.stqa.pft.sandbox.HelloWorld"
 mainClassName = "ru.stqa.pft.sandbox.Distance"
+
+repositories{
+    mavenCentral()
+}
+dependencies {
+    implementation group: 'org.testng', name: 'testng', version: '6.9.10'
+}
