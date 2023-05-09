@@ -6,6 +6,17 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../addressbook_WEB_Tests" />
+        <option name="gradleHome" value="/opt/gradle/gradle-8.0.2" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../addressbook_WEB_Tests" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/../sandbox" />
         <option name="gradleHome" value="/opt/gradle/gradle-8.0.2" />
         <option name="modules">
