@@ -7,22 +7,17 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
-//import org.apache.commons.io.FileUtils;
 
 public class testGroupCreation {
   private WebDriver wd;
   private JavascriptExecutor js;
 
-  @BeforeMethod(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true) //инициализация фикустуры
   public void setUp() throws Exception {
     wd = new ChromeDriver();
     //    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     js = (JavascriptExecutor) wd;
-  }
-
-  @Test
-  public void testGroupCreationTests() throws Exception {
     wd.get("http://localhost/addressbook/");
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
@@ -31,6 +26,10 @@ public class testGroupCreation {
     wd.findElement(By.name("pass")).clear();
     wd.findElement(By.name("pass")).sendKeys("secret");
     wd.findElement(By.xpath("//input[@value='Login']")).click();
+  }
+
+  @Test  //фикстура - с английского зазим,т.е тестовый метод зажимается между инициализацией и завершением фикстуры
+  public void testGroupCreationTests() throws Exception {
     wd.findElement(By.linkText("groups")).click();
     wd.findElement(By.name("new")).click();
     wd.findElement(By.name("group_name")).click();
@@ -48,7 +47,7 @@ public class testGroupCreation {
     wd.findElement(By.linkText("Logout")).click();
   }
 
-  @AfterMethod(alwaysRun = true)
+  @AfterMethod(alwaysRun = true) //завершение фикстуры
   public void tearDown() throws Exception {
     wd.quit();
   }
