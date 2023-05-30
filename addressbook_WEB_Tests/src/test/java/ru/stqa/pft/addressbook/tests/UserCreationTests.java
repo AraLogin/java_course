@@ -8,7 +8,7 @@ public class UserCreationTests extends TestBase {
     @Test
     public void testUserCreationTests() throws Exception {
         app.getUserHelper().initUserCreation();
-        app.getUserHelper().fillUserForm(new UserData("Test", "Testovich", "Testov", "Testik", "test inc.", "887878777"));
+        app.getUserHelper().fillUserForm(new UserData("Test", null, null, "Testik", "test inc.", "887878777"));
         app.getUserHelper().addUser();
         app.logout();
     }

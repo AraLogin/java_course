@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(Browser.FIREFOX.browserName());//выбор браузера
+    protected final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());//выбор браузера
 
     @BeforeMethod(alwaysRun = true) //инициализация фикустуры
     public void setUp() throws Exception {
