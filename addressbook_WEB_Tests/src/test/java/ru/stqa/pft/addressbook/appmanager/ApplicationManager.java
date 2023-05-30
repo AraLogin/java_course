@@ -1,11 +1,20 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Browser;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
+    private String browser;
     public WebDriver wd;
     private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
@@ -13,8 +22,21 @@ public class ApplicationManager {
     private GroupHelper groupHelper;
     private JavascriptExecutor js;
 
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+    }
+
     public void init() {
-        wd = new ChromeDriver();
+        if (browser==Browser.CHROME.browserName()) {
+            wd = new ChromeDriver();
+        } else if (browser==Browser.FIREFOX.browserName()){
+            //wd = new FirefoxDriver();
+            FirefoxOptions options = new FirefoxOptions();
+            options.setBinary(new FirefoxBinary(new File("/usr/local/bin/firefox")));
+            wd = new FirefoxDriver(options);
+        } else if (browser==Browser.IE.browserName()){
+            wd = new InternetExplorerDriver();
+        }
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         //js = (JavascriptExecutor) wd;
         wd.get("http://localhost/addressbook/");
