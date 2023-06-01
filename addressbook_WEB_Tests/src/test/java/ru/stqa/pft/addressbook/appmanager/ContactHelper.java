@@ -37,10 +37,21 @@ public class ContactHelper extends HelperBase{
         click(By.linkText("add new"));
     }
 
-    public void selectUserId() {click(By.xpath("//td/input"));}
+    public void selectUser() {click(By.xpath("//td/input"));}
 
     public void editUser(){click(By.xpath("//img[@alt='Edit']"));}
     public void deleteUser() {click(By.xpath("//input[@value='Delete']"));}
 
     public void updateUser() {click(By.xpath("//div[@id='content']/form/input[22]"));}
+
+    public void createUser(UserData user) {
+        initUserCreation();
+        fillUserForm(user,true);
+        addUser();
+
+    }
+
+    public boolean isThereAUser() {
+        return isElementPresent(By.xpath("//td/input"));
+    }
 }

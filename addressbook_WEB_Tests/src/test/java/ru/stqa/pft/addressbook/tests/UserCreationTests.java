@@ -10,6 +10,6 @@ public class UserCreationTests extends TestBase {
         app.getUserHelper().initUserCreation();
         app.getUserHelper().fillUserForm(new UserData("Test", null, null, "Testik", "test inc.", "887878777", "Test1"),true);
         app.getUserHelper().addUser();
-        app.logout();
+        app.getNavigationHelper().gotoHomePage();
     }
 }
