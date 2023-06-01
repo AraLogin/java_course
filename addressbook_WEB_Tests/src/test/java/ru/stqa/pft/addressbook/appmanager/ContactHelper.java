@@ -2,6 +2,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.UserData;
 
 public class ContactHelper extends HelperBase{
@@ -14,14 +16,22 @@ public class ContactHelper extends HelperBase{
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillUserForm(UserData userData) {
+    public void fillUserForm(UserData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
         type(By.name("middlename"),userData.getMiddlename());
         type(By.name("lastname"),userData.getLastname());
         type(By.name("nickname"),userData.getNickname());
         type(By.name("company"), userData.getCompany());
         type(By.name("mobile"),userData.getMobile());
+
+        //Проверка на наличие поля new_group, если creation=true ,значит при создании оно должно быть. Если эдит, то нет
+        if (creation ){
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
+
 
     public void initUserCreation() {
         click(By.linkText("add new"));
