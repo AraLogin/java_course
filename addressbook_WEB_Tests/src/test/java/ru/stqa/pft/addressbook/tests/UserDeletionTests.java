@@ -9,7 +9,8 @@ public class UserDeletionTests extends TestBase{
     public void testUserDeletionTests() throws Exception {
         app.getNavigationHelper().gotoHomePage();
         if (! app.getUserHelper().isThereAUser()){
-            app.getUserHelper().createUser(new UserData("Test", null, null, "Testik", "test inc.", "887878777", "Test1"));
+            app.getUserHelper().createUser(new UserData("Test", null, null,
+                    "Testik", "test inc.", "887878777", "Test1"));
             app.getNavigationHelper().gotoHomePage();
         }
         app.getUserHelper().selectUser();

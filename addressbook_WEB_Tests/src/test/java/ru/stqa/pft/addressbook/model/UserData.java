@@ -9,7 +9,8 @@ public class UserData {
     private final String mobile;
     private final String group;
 
-    public UserData(String firstname, String middlename, String lastname, String nickname, String company, String mobile, String group) {
+    public UserData(String firstname, String middlename, String lastname, String nickname, String company,
+                    String mobile, String group) {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;

@@ -9,11 +9,13 @@ public class UserModificationTests extends TestBase {
     public void testUserModification() throws Exception{
         app.getNavigationHelper().gotoHomePage();
         if (! app.getUserHelper().isThereAUser()){
-            app.getUserHelper().createUser(new UserData("Test", null, null, "Testik", "test inc.", "887878777", "Test1"));
+            app.getUserHelper().createUser(new UserData("Test", null, null,
+                    "Testik", "test inc.", "887878777", "test1"));
             app.getNavigationHelper().gotoHomePage();
         }
         app.getUserHelper().editUser();
-        app.getUserHelper().fillUserForm(new UserData("Editor", "Testo", "Teov", "Testik", "test inc.", "8855578777",null),false);
+        app.getUserHelper().fillUserForm(new UserData("Editor", "Testo", "Testov",
+                "Testik", "test inc.", "8855578777","test"),false);
         app.getUserHelper().updateUser();
         app.getNavigationHelper().gotoHomePage();
     }

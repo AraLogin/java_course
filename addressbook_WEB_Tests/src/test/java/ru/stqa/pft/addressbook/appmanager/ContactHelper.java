@@ -26,7 +26,7 @@ public class ContactHelper extends HelperBase{
 
         //Проверка на наличие поля new_group, если creation=true ,значит при создании оно должно быть. Если эдит, то нет
         if (creation ){
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+            new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -54,4 +54,9 @@ public class ContactHelper extends HelperBase{
     public boolean isThereAUser() {
         return isElementPresent(By.xpath("//td/input"));
     }
+
+    public boolean isThereAGroup() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }
+
