@@ -30,14 +30,18 @@ public class ApplicationManager {
         if (browser.equals(Browser.CHROME.browserName())) {
             wd = new ChromeDriver();
         } else if (browser.equals(Browser.FIREFOX.browserName())){
-            //wd = new FirefoxDriver();
             FirefoxOptions options = new FirefoxOptions();
             options.setBinary(new FirefoxBinary(new File("/usr/local/bin/firefox")));
             wd = new FirefoxDriver(options);
         } else if (browser.equals(Browser.IE.browserName())){
             wd = new InternetExplorerDriver();
         }
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        //Изменение времени ожидания для FF на 1сек., т.к он периодически не успевает прогрузить эелементы страницы
+        if (browser.equals(Browser.FIREFOX.browserName())){
+            wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        } else {
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        }
         //js = (JavascriptExecutor) wd;
         wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
@@ -46,24 +50,18 @@ public class ApplicationManager {
         contactHelper = new ContactHelper(wd);
         sessionHelper.login("admin", "secret");
     }
-
-
     public void logout() {
         wd.findElement(By.linkText("Logout")).click();
     }
-
     public void stop() {
         wd.quit();
     }
-
     public GroupHelper getGroupHelper() {
         return groupHelper;
     }
-
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
     }
-
     public ContactHelper getUserHelper() {
         return contactHelper;
     }
