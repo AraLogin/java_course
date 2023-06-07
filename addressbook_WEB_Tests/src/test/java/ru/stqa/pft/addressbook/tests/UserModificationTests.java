@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.UserData;
 
 public class UserModificationTests extends TestBase {
@@ -9,6 +10,9 @@ public class UserModificationTests extends TestBase {
     public void testUserModification() throws Exception{
         app.getNavigationHelper().gotoHomePage();
         if (! app.getUserHelper().isThereAUser()){
+            app.getNavigationHelper().gotoGroupPage();
+            app.getGroupHelper().createGroup(new GroupData("test", null, null));
+            app.getNavigationHelper().gotoHomePage();
             app.getUserHelper().createUser(new UserData("Test", null, null,
                     "Testik", "test inc.", "887878777", "test1"));
             app.getNavigationHelper().gotoHomePage();
