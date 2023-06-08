@@ -62,7 +62,7 @@ public class ApplicationManager {
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
     }
-    public ContactHelper getUserHelper() {
+    public ContactHelper getContactHelper() {
         return contactHelper;
     }
 }
