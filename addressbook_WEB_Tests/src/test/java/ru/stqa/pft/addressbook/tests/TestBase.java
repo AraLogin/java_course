@@ -16,6 +16,7 @@ public class TestBase {
 
     @AfterMethod(alwaysRun = true) //завершение фикстуры
     public void tearDown() throws Exception {
+        app.logout();
         app.stop();
     }
 

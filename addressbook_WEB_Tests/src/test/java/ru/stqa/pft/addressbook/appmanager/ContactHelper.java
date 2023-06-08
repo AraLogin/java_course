@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import ru.stqa.pft.addressbook.model.UserData;
+import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase{
 
@@ -12,11 +12,11 @@ public class ContactHelper extends HelperBase{
         super(wd);
     }
 
-    public void addUser() {
+    public void addContact() {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillUserForm(UserData userData, boolean creation) {
+    public void fillContactForm(ContactData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
         type(By.name("middlename"),userData.getMiddlename());
         type(By.name("lastname"),userData.getLastname());
@@ -33,25 +33,25 @@ public class ContactHelper extends HelperBase{
     }
 
 
-    public void initUserCreation() {
+    public void initContactCreation() {
         click(By.linkText("add new"));
     }
 
-    public void selectUser() {click(By.xpath("//td/input"));}
+    public void selectContact() {click(By.xpath("//td/input"));}
 
-    public void editUser(){click(By.xpath("//img[@alt='Edit']"));}
-    public void deleteUser() {click(By.xpath("//input[@value='Delete']"));}
+    public void editContact(){click(By.xpath("//img[@alt='Edit']"));}
+    public void deleteContact() {click(By.xpath("//input[@value='Delete']"));}
 
-    public void updateUser() {click(By.xpath("//div[@id='content']/form/input[22]"));}
+    public void updateContact() {click(By.xpath("//div[@id='content']/form/input[22]"));}
 
-    public void createUser(UserData user) {
-        initUserCreation();
-        fillUserForm(user,true);
-        addUser();
+    public void createContact(ContactData user) {
+        initContactCreation();
+        fillContactForm(user,true);
+        addContact();
 
     }
 
-    public boolean isThereAUser() {
+    public boolean isThereAContact() {
         return isElementPresent(By.xpath("//td/input"));
     }
 
