@@ -11,14 +11,20 @@ public class GroupDeletionTests extends TestBase {
   @Test
   public void testGroupDeletion() throws Exception {
     app.getNavigationHelper().gotoGroupPage();
-    if (! app.getGroupHelper().isThereAGroup()){
-      app.getGroupHelper().createGroup(new GroupData("Test", null, null));
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("Test2", null, null));
     }
-    List<GroupData> before =app.getGroupHelper().getGroupList();
-    app.getGroupHelper().selectGroup(before.size() -1);
+    //размер списка ДО
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().deleteSelectedGroups();
     app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> after =app.getGroupHelper().getGroupList();
-    Assert.assertEquals(after.size(),before.size() - 1);
+    //размер списка ПОСЛЕ
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    //сравнение размера списков
+    Assert.assertEquals(after.size(), before.size() - 1);
+    //удаление старого списка
+    before.remove(before.size() - 1);
+    //сравнение элементов старого и нового списка
+    Assert.assertEquals(before, after); }
   }
-}
