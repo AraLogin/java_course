@@ -18,10 +18,9 @@ public class ContactHelper extends HelperBase{
 
     public void fillContactForm(ContactData userData, boolean creation) {
         type(By.name("firstname"),userData.getFirstname());
-        type(By.name("middlename"),userData.getMiddlename());
         type(By.name("lastname"),userData.getLastname());
-        type(By.name("nickname"),userData.getNickname());
-        type(By.name("company"), userData.getCompany());
+        type(By.name("address"),userData.getAddress());
+        type(By.name("email"), userData.getEmail());
         type(By.name("mobile"),userData.getMobile());
 
         //Проверка на наличие поля new_group, если creation=true ,значит при создании оно должно быть. Если эдит, то нет
@@ -48,7 +47,6 @@ public class ContactHelper extends HelperBase{
         initContactCreation();
         fillContactForm(user,true);
         addContact();
-
     }
 
     public boolean isThereAContact() {
@@ -62,5 +60,13 @@ public class ContactHelper extends HelperBase{
     public int getContactCount() {
         return wd.findElements((By.name("selected[]"))).size();
     }
+
+  //  public List<ContactData> getContactList() {
+  //      List<ContactData> contacts = new ArrayList<ContactData>();
+  //      List<WebElement> rowElements = wd.findElements(By.tagName("td"));
+    //    for (WebElement element : rowElements) {
+      //      String name = element.getText();
+        //    String lastname = element.getText();
+          //  GroupData contact = new ContactData(); }
 }
 

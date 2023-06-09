@@ -16,16 +16,16 @@ public class ContactModificationTests extends TestBase {
             app.getGroupHelper().createGroup(new GroupData("test", null, null));
             app.getNavigationHelper().gotoHomePage();
             app.getContactHelper().createContact(new ContactData("Test", null, null,
-                    "Testik", "test inc.", "887878777"));
+                    "test@mail.com", "887878777"));
             app.getNavigationHelper().gotoHomePage();
         }
         //модификация последнего контакта
-        app.getContactHelper().editContact(before -1);
-        app.getContactHelper().fillContactForm(new ContactData("Editor", "Testo", "Testov",
-                "Testik", "test inc.", "8855578777"),false);
+        app.getContactHelper().editContact(before -1 );
+        app.getContactHelper().fillContactForm(new ContactData("Testik", null,
+                null, "notnull@null.com",  "887878777"),false);
         app.getContactHelper().updateContact();
         app.getNavigationHelper().gotoHomePage();
         int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after,before - 1);
+        Assert.assertEquals(after,before );
     }
 }
