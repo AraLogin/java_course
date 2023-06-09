@@ -13,23 +13,14 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreationTests() throws Exception {
         app.getNavigationHelper().gotoGroupPage();
         List<GroupData> before =app.getGroupHelper().getGroupList();
-        GroupData group = new GroupData("Test1", null, null);
+        GroupData group = new GroupData("Test2", null, null);
         app.getGroupHelper().createGroup(group);
         app.getNavigationHelper().gotoGroupPage();
         List<GroupData> after =app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size() +1);
 
-        before.add(group);
-        //нахождение максимального идентификатора(новой группы)
-        int max = 0;
-        //постепенноо сравниваем уже найденный макс с уже найденным эл-ом и если id > то увеличиваем
-        for (GroupData g : after) {
-            if (g.getId() > max) {
-                max = g.getId();
-            }
-        }
-        //меняем значение на новый найденный максимум
-        group.setId(max);
+        //Добавили сравниватель для вычисления max id
+        group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         before.add(group);
         Assert.assertEquals (new HashSet<Object>(before), new HashSet<Object>(after));
     }
