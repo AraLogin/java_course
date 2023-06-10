@@ -15,10 +15,11 @@ public class ContactModificationTests extends TestBase {
     public void ensurePrecondition() {
         if (app.contact().list().size() == 0) {
             app.goTo().GroupPage();
-            app.group().create(new GroupData("test", null, null));
+            app.group().create(new GroupData().withName("test"));
             app.goTo().homePage();
-            app.contact().create(new ContactData("test2", "testov", "SAINT-P",
-                    "null@null.com", "7777"));
+            app.contact().create(new ContactData().withFirstname("test2").withLastname("testov")
+                    .withAddress("SAINT-P").withEmail("null@null.com").withMobile("7777"));
+
             app.goTo().homePage();
         }
     }
@@ -26,8 +27,10 @@ public class ContactModificationTests extends TestBase {
     public void testUserModification() throws Exception{
         app.goTo().homePage();
         List<ContactData> before = app.contact().list();
-        ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Testik",
-                "Modificov", "New st.", "notnull@null.com",  "887878777");
+        ContactData contact = new ContactData().withId(before.get(before.size()-1).getId())
+                .withFirstname("Testik").withLastname("Modificov").withAddress("New st.")
+                .withEmail("notnull@null.com").withMobile("887878777");
+
         int index = before.size() -1;
         //модификация последнего контакта
         app.contact().modify(index, contact);

@@ -15,12 +15,13 @@ public class ContactCreationTests extends TestBase {
 
         if (!app.contact().isThereAGroup()) {
             app.goTo().GroupPage();
-            app.group().create(new GroupData("test", null, null));
+            app.group().create(new GroupData().withName("test2").withFooter("test1").withHeader("test3"));
         }
         app.goTo().homePage();
         List<ContactData> before = app.contact().list();
-        ContactData contact = new ContactData("test2","testov","SAINT-P",
-                "null@null.com","7777");
+        ContactData contact = new ContactData().withFirstname("test2").withLastname("testov")
+                .withAddress("SAINT-P").withEmail("null@null.com").withMobile("7777");
+
         app.contact().create(contact);
         app.goTo().homePage();
         List<ContactData> after = app.contact().list();
