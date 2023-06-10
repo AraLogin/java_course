@@ -72,19 +72,11 @@ public class ContactHelper extends HelperBase{
         for (WebElement element : elements) {
             String lastname = element.findElement(By.xpath("//tr/td[2]")).getText();
             String firstname = element.findElement(By.xpath("//tr/td[3]")).getText();
-            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             ContactData contact = new ContactData(id,firstname,lastname,null,null,null);
             contacts.add(contact);
         }
         return contacts;
     }
-
-    //  public List<ContactData> getContactList() {
-  //      List<ContactData> contacts = new ArrayList<ContactData>();
-  //      List<WebElement> rowElements = wd.findElements(By.tagName("td"));
-    //    for (WebElement element : rowElements) {
-      //      String name = element.getText();
-        //    String lastname = element.getText();
-          //  GroupData contact = new ContactData(); }
 }
 
