@@ -17,7 +17,7 @@ public class ContactDeletionTests extends TestBase{
             app.getNavigationHelper().gotoGroupPage();
             app.getGroupHelper().createGroup(new GroupData("test", null, null));
             app.getNavigationHelper().gotoHomePage();
-            app.getContactHelper().createContact(new ContactData("Test", null, null,
+            app.getContactHelper().createContact(new ContactData("Test", "Our", "HOME",
                     "test@mail.com", "887878777"));
             app.getNavigationHelper().gotoHomePage();
         }
