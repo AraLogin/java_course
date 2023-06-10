@@ -11,12 +11,12 @@ public class GroupCreationTests extends TestBase {
 
     @Test  //фикстура - с английского зазим,т.е тестовый метод зажимается между инициализацией и завершением фикстуры
     public void testGroupCreationTests() throws Exception {
-        app.getNavigationHelper().gotoGroupPage();
-        List<GroupData> before =app.getGroupHelper().getGroupList();
+        app.goTo().GroupPage();
+        List<GroupData> before =app.group().list();
         GroupData group = new GroupData("Test2", null, null);
-        app.getGroupHelper().createGroup(group);
-        app.getNavigationHelper().gotoGroupPage();
-        List<GroupData> after =app.getGroupHelper().getGroupList();
+        app.group().create(group);
+        app.goTo().GroupPage();
+        List<GroupData> after =app.group().list();
         Assert.assertEquals(after.size(), before.size() +1);
 
         before.add(group);

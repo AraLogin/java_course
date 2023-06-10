@@ -10,20 +10,20 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test
+    @Test (enabled = true)
     public void testUserCreationTests() throws Exception {
 
-        if (!app.getContactHelper().isThereAGroup()) {
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData("test", null, null));
+        if (!app.contact().isThereAGroup()) {
+            app.goTo().GroupPage();
+            app.group().create(new GroupData("test", null, null));
         }
-        app.getNavigationHelper().gotoHomePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
+        app.goTo().homePage();
+        List<ContactData> before = app.contact().list();
         ContactData contact = new ContactData("test2","testov","SAINT-P",
                 "null@null.com","7777");
-        app.getContactHelper().createContact(contact);
-        app.getNavigationHelper().gotoHomePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().create(contact);
+        app.goTo().homePage();
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(),before.size() + 1);
 
         before.add(contact);
