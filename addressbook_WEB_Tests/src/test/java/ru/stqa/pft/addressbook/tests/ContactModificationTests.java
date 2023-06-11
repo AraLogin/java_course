@@ -13,8 +13,8 @@ public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
+        app.goTo().GroupPage();
         if (app.contact().list().size() == 0) {
-            app.goTo().GroupPage();
             app.group().create(new GroupData().withName("test"));
             app.goTo().homePage();
             app.contact().create(new ContactData().withFirstname("test2").withLastname("testov")

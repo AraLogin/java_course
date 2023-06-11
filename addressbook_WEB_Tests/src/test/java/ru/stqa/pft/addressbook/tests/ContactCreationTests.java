@@ -12,9 +12,8 @@ public class ContactCreationTests extends TestBase {
 
     @Test (enabled = true)
     public void testUserCreationTests() throws Exception {
-
+        app.goTo().GroupPage();
         if (!app.contact().isThereAGroup()) {
-            app.goTo().GroupPage();
             app.group().create(new GroupData().withName("test2").withFooter("test1").withHeader("test3"));
         }
         app.goTo().homePage();
