@@ -13,7 +13,7 @@ public class ContactCreationTests extends TestBase {
     @BeforeMethod
     public void ensurePrecondition() {
         app.goTo().GroupPage();
-        if (app.contact().all().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.group().create(new GroupData().withName("test2").withFooter("test1").withHeader("test3"));
         }
     }
