@@ -24,7 +24,8 @@ public class ContactDeletionTests extends TestBase{
                 app.goTo().homePage();
             }
             app.contact().create(new ContactData().withFirstname("Test").withLastname("Our")
-                    .withAddress("HOME").withEmail("test@mail.com").withMobile("887878777"));
+                    .withAddress("HOME").withEmail("test@mail.com").withHome("111")
+                    .withMobile("222").withWork("333"));
             app.goTo().homePage();
         }
     }

@@ -23,7 +23,8 @@ public class ContactCreationTests extends TestBase {
         app.goTo().homePage();
         Contacts before = app.contact().all();
         ContactData contact = new ContactData().withFirstname("test2").withLastname("testov")
-                .withAddress("SAINT-P").withEmail("null@null.com").withMobile("7777");
+                .withAddress("SAINT-P").withEmail("null@null.com").withHome("111")
+                .withMobile("222").withWork("333");
 
         app.contact().create(contact);
         app.goTo().homePage();
@@ -37,7 +38,8 @@ public class ContactCreationTests extends TestBase {
         app.goTo().homePage();
         Contacts before = app.contact().all();
         ContactData contact = new ContactData().withFirstname("test2'").withLastname("testov")
-                .withAddress("SAINT-P").withEmail("null@null.com").withMobile("7777");
+                .withAddress("SAINT-P").withEmail("null@null.com").withHome("111")
+                .withMobile("222").withWork("333");
 
         app.contact().create(contact);
         app.goTo().homePage();
