@@ -2,6 +2,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
 
+import java.io.File;
+
 public class HelperBase {
     protected WebDriver wd;
     public HelperBase(WebDriver wd) { this.wd=wd; }
@@ -17,6 +19,12 @@ public class HelperBase {
                 wd.findElement(locator).sendKeys(text);
             }
         } //Возможность заполнения значениями по умолчанию, если text == null.
+    }
+
+    protected void attach(By locator, File file) {
+        if (file != null){
+                wd.findElement(locator).sendKeys(file.getAbsolutePath());
+        }
     }
     public boolean isAlertPresent(){
         try {
