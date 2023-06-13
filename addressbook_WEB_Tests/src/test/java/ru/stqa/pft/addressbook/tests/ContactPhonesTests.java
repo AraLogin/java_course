@@ -1,15 +1,15 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
 public class ContactPhonesTests {
 
-    @BeforeMethod
+    /*@BeforeMethod
     public void ensurePrecondition() {
         app.goTo().homePage();
         if (app.contact().all().size() == 0){
@@ -20,15 +20,19 @@ public class ContactPhonesTests {
                 app.goTo().homePage();
             }
             app.contact().create(new ContactData().withFirstname("Test").withLastname("Our")
-                    .withAddress("HOME").withEmail("test@mail.com").withMobilePhone("887878777"));
+                    .withAddress("HOME").withEmail("test@mail.com").withHomePhone("2222")
+                    .withMobilePhone("887878777").withWorkPhone("44444"));
             app.goTo().homePage();
         }
-    }
+    } */
     @Test
     public void testContactPhones(){
         app.goTo().homePage();
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
+        assertThat(contact.getHomePhone(), equalTo(contactInfoFromEditForm.getHomePhone()));
+        assertThat(contact.getMobilePhone(), equalTo(contactInfoFromEditForm.getMobilePhone()));
+        assertThat(contact.getWorkPhone(), equalTo(contactInfoFromEditForm.getWorkPhone()));
     }
 }
