@@ -20,7 +20,7 @@ public class ContactPhonesTests {
                 app.goTo().homePage();
             }
             app.contact().create(new ContactData().withFirstname("Test").withLastname("Our")
-                    .withAddress("HOME").withEmail("test@mail.com").withMobile("887878777"));
+                    .withAddress("HOME").withEmail("test@mail.com").withMobilePhone("887878777"));
             app.goTo().homePage();
         }
     }

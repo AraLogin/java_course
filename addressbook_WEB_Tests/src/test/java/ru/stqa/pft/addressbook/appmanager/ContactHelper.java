@@ -25,9 +25,9 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), userData.getLastname());
         type(By.name("address"), userData.getAddress());
         type(By.name("email"), userData.getEmail());
-        type(By.name("home"), userData.getHome());
-        type(By.name("mobile"), userData.getMobile());
-        type(By.name("work"), userData.getWork());
+        type(By.name("home"), userData.getHomePhone());
+        type(By.name("mobile"), userData.getMobilePhone());
+        type(By.name("work"), userData.getWorkPhone());
 
         //Проверка на наличие поля new_group, если creation=true,значит при создании оно должно быть. Если эдит, то нет
         if (creation) {
@@ -54,7 +54,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void updateContact() {
+    public void update() {
         click(By.xpath("//div[@id='content']/form/input[22]"));
     }
 
@@ -74,7 +74,7 @@ public class ContactHelper extends HelperBase {
     public void modify(ContactData contact) {
         modifyById(contact.getId());
         fillContactForm(contact, false);
-        updateContact();
+        update();
         contactCache = null;
         returnToHomePage();
     }
@@ -111,8 +111,10 @@ public class ContactHelper extends HelperBase {
         for (WebElement element : elements) {
             String lastname = element.findElement(By.xpath("td[2]")).getText();
             String firstname = element.findElement(By.xpath("td[3]")).getText();
+            String[] phones = element.findElement(By.xpath("td[5]")).getText().split("\n");
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+            contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+                    .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
         }
         return contactCache;
     }
@@ -128,8 +130,8 @@ public class ContactHelper extends HelperBase {
         wd.navigate().back();
 
         return new ContactData().withId(contact.getId()).withFirstname(firstname)
-                .withLastname(lastname).withEmail(email1).withAddress(address).withHome(home).withMobile(mobile)
-                        .withWork(work);
+                .withLastname(lastname).withEmail(email1).withAddress(address).withHomePhone(home).withMobilePhone(mobile)
+                .withWorkPhone(work);
     }
 }
 
