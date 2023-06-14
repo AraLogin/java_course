@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,37 +32,57 @@ public class ContactCreationTests extends TestBase {
     }
 
 
-    @DataProvider
+    @DataProvider //XML
     public Iterator<Object[]> validContactsFromXml() throws IOException {
         //File photo = new File("src/test/resources/i.webp");
-        BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.xml")));
-        String xml = "";
-        String line = reader.readLine();
-        while (line != null) {
-            xml += line;
-            line = reader.readLine();
+        try(BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.xml")))){
+            String xml = "";
+            String line = reader.readLine();
+            while (line != null) {
+                xml += line;
+                line = reader.readLine();
+            }
+            XStream xStream = new XStream();
+            xStream.processAnnotations(ContactData.class);
+            List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
+            return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
         }
-        XStream xStream = new XStream();
-        xStream.processAnnotations(ContactData.class);
-        List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
-        return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
 
-    @DataProvider
+    @DataProvider // JSON
     public Iterator<Object[]> validContactsFromJson() throws IOException {
         //File photo = new File("src/test/resources/i.webp");
-        BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.json")));
-        String json = "";
-        String line = reader.readLine();
-        while (line != null) {
-            json += line;
-            line = reader.readLine();
+        try(BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.json")))){
+            String json = "";
+            String line = reader.readLine();
+            while (line != null) {
+                json += line;
+                line = reader.readLine();
+            }
+            Gson gson = new Gson();
+            List<ContactData> contacts = gson.fromJson(json,new TypeToken<List<ContactData>>(){}.getType());
+            return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
         }
-        Gson gson = new Gson();
-        List<ContactData> contacts = gson.fromJson(json,new TypeToken<List<ContactData>>(){}.getType());
-        return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
 
+    @DataProvider //CSV
+    public Iterator<Object[]> validContacts() throws IOException {
+        List<Object[]> list = new ArrayList<Object[]>();
+        File photo = new File("src/test/resources/i.webp");
+        try(BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.csv")))){
+            String line = reader.readLine();
+            while (line != null) {
+                String[] split = line.split(";");
+                list.add(new Object[]{new ContactData().withFirstname(split[0]).withLastname(split[1])
+                        .withAddress(split[2]).withEmail(split[3])
+                        .withEmail2(split[4])
+                        .withEmail3(split[5]).withHomePhone(split[6])
+                        .withMobilePhone(split[7]).withWorkPhone(split[8]).withPhoto(photo)});
+                line = reader.readLine();
+            }
+            return list.iterator();
+        }
+    }
 
     @Test (dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact)  {
