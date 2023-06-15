@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -26,8 +24,9 @@ public class GroupDeletionTests extends TestBase {
     GroupData deletedGroup = before.iterator().next();
     app.goTo().GroupPage();
     app.group().delete(deletedGroup);
-    MatcherAssert.assertThat(app.group().Count(),equalTo(before.size() - 1));
+    assertThat(app.group().Count(),equalTo(before.size() - 1));
     Groups after = app.db().groups();
-    assertThat(after, CoreMatchers.equalTo(before.without(deletedGroup)));
+    assertThat(after, equalTo(before.without(deletedGroup)));
+    verifyGroupListInUI();
   }
 }
