@@ -30,7 +30,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("home"), userData.getHomePhone());
         type(By.name("mobile"), userData.getMobilePhone());
         type(By.name("work"), userData.getWorkPhone());
-        attach(By.name("photo"),userData.getPhoto());
+        //attach(By.name("photo"),userData.getPhoto());
 
         //Проверка на наличие поля new_group, если creation=true,значит при создании оно должно быть. Если эдит, то нет
         if (creation) {
