@@ -6,7 +6,7 @@
     "email": "null0@gmail.com",
     "email2": "null0@yandex.com",
     "email3": "null0@mail.com",
-    "homePhone": "55-55-50@gmail.com",
+    "homePhone": "55-55-50",
     "mobilePhone": "+777755644650",
     "workPhone": "23445650"
   },
@@ -17,7 +17,7 @@
     "email": "null1@gmail.com",
     "email2": "null1@yandex.com",
     "email3": "null1@mail.com",
-    "homePhone": "55-55-51@gmail.com",
+    "homePhone": "55-55-51",
     "mobilePhone": "+777755644651",
     "workPhone": "23445651"
   },
@@ -28,7 +28,7 @@
     "email": "null2@gmail.com",
     "email2": "null2@yandex.com",
     "email3": "null2@mail.com",
-    "homePhone": "55-55-52@gmail.com",
+    "homePhone": "55-55-52",
     "mobilePhone": "+777755644652",
     "workPhone": "23445652"
   }

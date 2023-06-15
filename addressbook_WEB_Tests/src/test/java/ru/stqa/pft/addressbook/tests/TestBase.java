@@ -6,8 +6,9 @@ import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
-    //выбор браузера/ задали статик для отерытия всех тестов в одном браузере
-    protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
+    //выбор браузера/ задали статик для открытия всех тестов в одном браузере
+    protected static final ApplicationManager app
+            = new ApplicationManager(System.getProperty("browser", Browser.CHROME.browserName()));
 
     @BeforeSuite
             (alwaysRun = true) //инициализация фикустуры

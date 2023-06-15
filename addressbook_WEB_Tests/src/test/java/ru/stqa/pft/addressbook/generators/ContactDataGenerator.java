@@ -89,7 +89,7 @@ public class ContactDataGenerator {
                     .withEmail(String.format("null%s@gmail.com",i))
                     .withEmail2(String.format("null%s@yandex.com",i))
                     .withEmail3(String.format("null%s@mail.com",i))
-                    .withHomePhone(String.format("55-55-5%s@gmail.com",i))
+                    .withHomePhone(String.format("55-55-5%s",i))
                     .withMobilePhone(String.format("+77775564465%s",i))
                     .withWorkPhone(String.format("2344565%s",i)));
         }
