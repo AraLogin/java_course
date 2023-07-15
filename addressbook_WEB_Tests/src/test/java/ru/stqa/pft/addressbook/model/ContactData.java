@@ -175,15 +175,16 @@ public class ContactData {
         ContactData that = (ContactData) o;
 
         if (id != that.id) return false;
-        if (firstname != null && that.firstname != null && !Objects.equals(firstname, that.firstname)) { return false; }
-        if (lastname != null && that.lastname != null && !Objects.equals(lastname, that.lastname)) { return false; }
-        if (address != null && that.address != null && !Objects.equals(address, that.address)) { return false; }
-        if (mobilePhone != null && that.mobilePhone != null && !Objects.equals(mobilePhone, that.mobilePhone)) { return false; }
-        if (email != null && that.email != null && !Objects.equals(email, that.email)) { return false; }
-        if (workPhone != null && that.workPhone != null && !Objects.equals(workPhone, that.workPhone)) { return false; }
-        if (homePhone != null && that.homePhone != null && !Objects.equals(homePhone, that.homePhone)) { return false; }
-        if (email2 != null && that.email2 != null && !Objects.equals(email2, that.email2)) { return false; }
-        return email3 == null || that.email3 == null || Objects.equals(email3, that.email3);
+        if (!Objects.equals(firstname, that.firstname)) return false;
+        if (!Objects.equals(lastname, that.lastname)) return false;
+        if (!Objects.equals(address, that.address)) return false;
+        if (!Objects.equals(mobilePhone, that.mobilePhone)) return false;
+        if (!Objects.equals(email, that.email)) return false;
+        if (!Objects.equals(workPhone, that.workPhone)) return false;
+        if (!Objects.equals(homePhone, that.homePhone)) return false;
+        if (!Objects.equals(email2, that.email2)) return false;
+        if (!Objects.equals(email3, that.email3)) return false;
+        return Objects.equals(groups, that.groups);
     }
 
     @Override
@@ -198,7 +199,7 @@ public class ContactData {
         result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
         result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
         result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
-        //result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
         return result;
     }
 
