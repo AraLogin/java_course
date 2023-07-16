@@ -25,6 +25,20 @@ public class AddContactToGroupTests extends TestBase {
                     .withAddress("HOME").withEmail("test@mail.com").withHomePhone("111")
                     .withMobilePhone("222").withWorkPhone("333"));
         }
+        Contacts contacts = app.db().contacts();
+        Groups groups = app.db().groups();
+        int contactFullSize = 0;
+        for(ContactData contact: contacts){
+            if (contact.getGroups().size() == groups.size()) {
+                contactFullSize++;
+            }
+            if (contactFullSize == contacts.size()) {
+                app.goTo().GroupPage();
+                app.group().create(new GroupData().withName("test1").withHeader("test2")
+                        .withFooter("test3"));
+                app.goTo().homePage();
+            }
+        }
     }
     @Test
     public void testAddContactToGroup() {

@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -12,18 +13,26 @@ import static org.hamcrest.Matchers.equalTo;
 public class RemoveContactFromGroup extends  TestBase {
     @BeforeMethod
     public void ensurePrecondition() {
-        app.goTo().homePage();
-        if (app.db().contacts().size() == 0){
-        app.goTo().GroupPage();
-        if (app.db().groups().size() == 0){
-            app.group().create(new GroupData().withName("test2").withFooter("test1")
-                    .withHeader("test3"));
-            app.goTo().homePage();
+        if (app.db().groups().size() == 0) {
+            app.goTo().GroupPage();
+            app.group().create(new GroupData().withName("test1").withHeader("test2")
+                    .withFooter("test3"));
         }
-        app.contact().create(new ContactData().withFirstname("Test").withLastname("Our")
-                .withAddress("HOME").withEmail("test@mail.com").withHomePhone("111")
-                .withMobilePhone("222").withWorkPhone("333"));
-    }
+        if (app.db().contacts().size() == 0) {
+            app.goTo().homePage();
+            app.contact().create(new ContactData().withFirstname("Test").withLastname("Our")
+                    .withAddress("HOME").withEmail("test@mail.com").withHomePhone("111")
+                    .withMobilePhone("222").withWorkPhone("333"));
+        }
+        Contacts contacts = app.db().contacts();
+        Groups groups = app.db().groups();
+        for(ContactData contact: contacts){
+            if(contact.getGroups().size() == 0){
+                app.contact().addingGroup(contact, groups.iterator().next());
+                app.goTo().homePage();
+            }
+            break;
+        }
 }
     @Test
     public void testRemoveFromGroup() {
