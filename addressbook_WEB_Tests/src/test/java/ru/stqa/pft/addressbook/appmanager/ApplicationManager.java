@@ -2,17 +2,20 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -34,36 +37,39 @@ public class ApplicationManager {
 
     public void init() throws IOException {
 
-        String target = System.getProperty("target","local");
+        String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
         dbHelper = new DbHelper();
 
-        if (browser.equals(Browser.CHROME.browserName())) {
-            wd = new ChromeDriver();
-        } else if (browser.equals(Browser.FIREFOX.browserName())){
-            FirefoxOptions options = new FirefoxOptions();
-            options.setBinary(new FirefoxBinary(new File("/usr/local/bin/firefox")));
-            wd = new FirefoxDriver(options);
-        } else if (browser.equals(Browser.IE.browserName())){
-            wd = new InternetExplorerDriver();
-        }
-        //Изменение времени ожидания для FF на 1сек., т.к он периодически не успевает прогрузить эелементы страницы
-        if (browser.equals(Browser.FIREFOX.browserName())){
-            wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        if ("".equals(properties.getProperty("selenium.server"))) {
+            if (browser.equals(Browser.CHROME.browserName())) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(Browser.IE.browserName())) {
+                wd = new InternetExplorerDriver();
+            } else if (browser.equals(Browser.FIREFOX.browserName())) {
+                wd = new FirefoxDriver(new FirefoxOptions().setBinary(properties.getProperty("web.pathToFirefox")));
+            }
         } else {
-            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browser);
+            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "linux")));
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+            if (browser.equals(Browser.FIREFOX.browserName())) {
+                wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            } else {
+                wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            }
+            wd.get(properties.getProperty("web.baseUrl"));
+            groupHelper = new GroupHelper(wd);
+            navigationHelper = new NavigationHelper(wd);
+            sessionHelper = new SessionHelper(wd);
+            contactHelper = new ContactHelper(wd);
+            sessionHelper.login(properties.getProperty("web.adminLogin"),
+                    properties.getProperty("web.adminPassword"));
+
+
         }
-        wd.get(properties.getProperty("web.baseUrl"));
-        groupHelper = new GroupHelper(wd);
-        navigationHelper = new NavigationHelper(wd);
-        sessionHelper = new SessionHelper(wd);
-        contactHelper = new ContactHelper(wd);
-        sessionHelper.login(properties.getProperty("web.adminLogin"),
-                properties.getProperty("web.adminPassword"));
-
-
-        
     }
     public void logout() {
         wd.findElement(By.linkText("Logout")).click();
