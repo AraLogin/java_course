@@ -16,8 +16,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
     private final Properties properties;
@@ -55,22 +55,16 @@ public class ApplicationManager {
             capabilities.setBrowserName(browser);
             capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "linux")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
-            if (browser.equals(Browser.FIREFOX.browserName())) {
-                wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-            } else {
-                wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-            }
-            wd.get(properties.getProperty("web.baseUrl"));
-            groupHelper = new GroupHelper(wd);
-            navigationHelper = new NavigationHelper(wd);
-            sessionHelper = new SessionHelper(wd);
-            contactHelper = new ContactHelper(wd);
-            sessionHelper.login(properties.getProperty("web.adminLogin"),
-                    properties.getProperty("web.adminPassword"));
-
-
         }
-    }
+        wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        groupHelper = new GroupHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
+        contactHelper = new ContactHelper(wd);
+        sessionHelper = new SessionHelper(wd);
+        wd.get(properties.getProperty("web.baseUrl"));
+        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+        }
+
     public void logout() {
         wd.findElement(By.linkText("Logout")).click();
     }
